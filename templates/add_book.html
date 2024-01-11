@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block RGZ %}РГЗ 5 семестр
+<div style="display: inline-block; position: relative; margin-left: 65%; color: black; text-decoration: none; top: 0px; font-size: 16px;">
+    <label style="font-size: 24px;">
+        Планета книг
+    </label>
+    <a href="/add_book" style="border: 0px solid; margin-left: 40px; text-decoration: none; color: black;">Добавить книгу</a>
+    <a href="/glav/login" style="border: 1px solid; border-radius: 8px; padding: 5px; margin-left: 50px; text-decoration: none; color: black;">Войти</a></li>
+    <a href="/glav/register" style="border: 1px solid; border-radius: 8px; padding: 5px; color: white; background-color: blue; text-decoration: none;">Зарегистрироваться</a>
+    <label>{{ username }}</label>
+    <a href="/glav/logout"><img src="/static/exit.png" width="30px" height="15px"></a>
+</div>
+<p>
+    <a href="/glav">На главную Страницу</a>
+</p>
+
+
+{% endblock %}
+
+{% block main %}
+
+<body>
+    <h1>Добавление книги</h1>
+
+    <form action="/add_book" method="post">
+        <input type="text" name="title" placeholder="Название книги">
+        <input type="text" name="author" placeholder="Автор книги">
+        <input type="number" name="pages" placeholder="Количество страниц">
+        <input type="text" name="publisher" placeholder="Издательство">
+        <input type="text" name="cover_url" placeholder="Ссылка на картинку">
+        <input type="text" name="full_book_url" placeholder="Ссылка на полную книгу">
+        <input type="submit" value="Добавить книгу">
+    </form>
+
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}

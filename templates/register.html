@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block RGZ %}РГЗ 5 семестр
+<p>
+    <a href="/glav">Меню</a>
+</p>
+
+<style>
+    .error {
+        border: 1px solid;
+        color: white;
+        border-radius: 5px;
+        background-color: red;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+    <body>
+        <form action="/glav/register" method="post">
+            <h1>Страница регистрации</h1>
+            <div>
+                <p>
+                    <input type="text" name="username" value="{{ username or ''}}" style="border-radius: 10px; border-color: blueviolet;" placeholder="Пользователь">
+                </p>
+            </div>
+            <div style="margin-top: 15px">
+                <p>
+                    <input type="password" name="password" value="{{ password or ''}}" style="border-radius: 10px; border-color: blueviolet;" placeholder="Пароль">
+                </p>
+            </div>
+            <input type="checkbox" name="is_admin" value="1">
+            <label for="is_admin">Администратор</label>
+            <button type="submit" style=" background-color: blue; color: white; border-radius: 5px; margin-left: 40px; margin-bottom: 10px;">Регистрация</button>
+            <span class="error">{{ errors }}</span>
+        </form>
+    </body>
+
+{% endblock %}

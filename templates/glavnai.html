@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block RGZ %}РГЗ 5 семестр
+<div style="display: inline-block; position: relative; margin-left: 58%; color: black; text-decoration: none; top: 0px; font-size: 16px;">
+    <label style="font-size: 24px;">
+        Планета книг
+    </label>
+    {% if current_user.is_authenticated or current_user.is_superuser %}
+        <a href="/add_book" style="border: 0px solid; margin-left: 40px; text-decoration: none; color: black;">Добавить книгу</a>
+    {% endif %}
+    <a href="/glav/login" style="border: 1px solid; border-radius: 8px; padding: 5px; margin-left: 50px; text-decoration: none; color: black;">Войти</a></li>
+    <a href="/glav/register" style="border: 1px solid; border-radius: 8px; padding: 5px; color: white; background-color: blue; text-decoration: none;">Зарегистрироваться</a>
+    <label>{{ username }}</label>
+    <a href="/glav/logout"><img src="/static/exit.png" width="30px" height="15px"></a>
+</div>
+
+
+
+{% endblock %}
+
+{% block main %}
+  
+        <h1>Книги</h1>
+
+        <div class="sort" style="border: 1px solid; height: 120px; width: 1000px; padding: 15px">Фильтр
+            <form action="/glav" method="get">               
+                <input type="text" name="title" placeholder="Название">
+                <input type="text" name="author" placeholder="Автор">
+                <input type="number" name="pages_from" placeholder="Страницы от">
+                <input type="number" name="pages_to" placeholder="Страницы до">
+                <input type="text" name="publisher" placeholder="Издательство">
+                <input type="submit" value="Сортировать">
+            </form>
+        </div>
+
+
+        {% for book in books %}
+            <list>
+                <div style="border: 1px solid; margin-top: 30px; height: 450px; font-size: 24px; width: 1500px;">
+                    <img style="margin: 20px; float: left; height: 400px;" src="{{ book.cover_url }}">
+                    <h2>{{ book.title }}</h2>
+                    <p>Автор:{{ book.author }}</p>
+                    <p>{{ book.pages }} страниц</p>
+                    <p>Издательство:{{ book.publisher }}</p>
+                    <p><a href="{{ book.full_book_url }}">Ссылка на книгу</a></p>
+                    <p>
+                        {% if current_user.is_authenticated or current_user.is_superuser %}
+                            <p><a href="{{ url_for('glav.edit_book', id=book.id) }}">Изменить</a></p>
+                            <p><a style="color: red; float: right; margin-right: 30px;" href="{{ url_for('glav.delete_book', id=book.id) }}">Удалить</a></p>
+                        {% endif %}
+                    </p>
+
+                </div>
+            </list>
+        {% endfor %}
+        {% if has_more_books %}
+            {% if current_page_number == 1 %}
+                <a href="/?page={{ current_page_number + 1 }}" class="btn btn-secondary" style="margin-left: 55%; font-size: 24px; margin-top: 20px;">Следущая страница</a>
+            {% else %}
+                <a href="/?page={{ current_page_number - 1 }}" class="btn btn-secondary" style="margin-left: 20%; font-size: 24px; margin-top: 20px;">Предыдущая страница</a>
+                <a href="/?page={{ current_page_number + 1 }}" class="btn btn-secondary" style="margin-left: 30%; font-size: 24px; margin-top: 20px;">Следущая страница</a>
+            {% endif %}
+        
+        {% else %}
+            <a href="/?page={{ current_page_number - 1 }}" class="btn btn-secondary" style="margin-left: 20%; font-size: 24px; margin-top: 20px;">Предыдущая страница</a>
+            <div style="margin-left: 45%; font-size: 24px;">Нет больше книг</div>
+        {% endif %}
+{% endblock %}
+
+
+
+
+

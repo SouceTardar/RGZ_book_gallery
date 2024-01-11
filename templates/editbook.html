@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block RGZ %}РГЗ 5 семестр
+<div style="display: inline-block; position: relative; margin-left: 65%; color: black; text-decoration: none; top: 0px; font-size: 16px;">
+    <label style="font-size: 24px;">
+        Планета книг
+    </label>
+    <a href="/add_book" style="border: 0px solid; margin-left: 40px; text-decoration: none; color: black;">Добавить книгу</a>
+    <a href="/glav/login" style="border: 1px solid; border-radius: 8px; padding: 5px; margin-left: 50px; text-decoration: none; color: black;">Войти</a></li>
+    <a href="/glav/register" style="border: 1px solid; border-radius: 8px; padding: 5px; color: white; background-color: blue; text-decoration: none;">Зарегистрироваться</a>
+    <label>{{ username }}</label>
+    <a href="/glav/logout"><img src="/static/exit.png" width="30px" height="15px"></a>
+</div>
+<p>
+    <a href="/glav">На главную Страницу</a>
+</p>
+
+
+{% endblock %}
+
+{% block main %}
+    <body>
+        <h1>Изменение книги</h1>
+
+        <form action="{{ url_for('glav.edit_book', id=book.id) }}" method="post">
+            <input type="text" name="title" placeholder="Название" value="{{ book.title }}">
+            <input type="text" name="author" placeholder="Автор" value="{{ book.author }}">
+            <input type="number" name="pages" placeholder="Количество страниц" value="{{ book.pages }}">
+            <input type="text" name="publisher" placeholder="Издатель" value="{{ book.publisher }}">
+            <button type="submit">Сохранить</button>
+        </form>
+    </body>
+{% endblock %}
